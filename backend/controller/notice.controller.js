@@ -5,12 +5,14 @@ import { validationResult } from 'express-validator'; ``
 // Create new notice
 const createNotice = async (req, res) => {
   try {
+    console.log(req.body);
     // Check for validation errors
     const errors = validationResult(req);
+    console.log(errors)
     if (!errors.isEmpty()) {
       return res.status(400).json({
         success: false,
-        message: 'Validation failed',
+        message: errors[0]?.msg,
         errors: errors.array()
       });
     }
@@ -169,6 +171,7 @@ const getNotice = async (req, res) => {
   try {
     const { id } = req.params;
 
+
     const notice = await Notice.findById(id)
       .populate('postedBy', 'name email role');
 
@@ -180,7 +183,7 @@ const getNotice = async (req, res) => {
     }
 
     // Check if user can view this notice
-    if (req.user.role !== 'ADMIN') {
+    if (req.user.role !== 'ADMIN' && req.user.role !== 'FACULTY') {
       const canView = notice.targetAudience.includes('ALL') ||
         notice.targetAudience.includes(req.user.role);
 
@@ -195,14 +198,15 @@ const getNotice = async (req, res) => {
     // Add view tracking
     await notice.addView(req.user._id);
 
-    // Emit view event for analytics
-    const io = req.app.get('io');
-    if (io) {
-      io.emit('view-notice', {
-        noticeId: notice._id,
-        userId: req.user._id
-      });
-    }
+
+    // // Emit view event for analytics
+    // const io = req.app.get('io');
+    // if (io) {
+    //   io.emit('view-notice', {
+    //     noticeId: notice._id,
+    //     userId: req.user._id
+    //   });
+    // }
 
     res.status(200).json({
       success: true,

@@ -70,7 +70,13 @@ const NoticeCard = ({ notice, onDelete, onEdit }) => {
 
       {/* Title */}
       <h3 className="text-lg font-semibold text-gray-900 mb-2">
-        {notice.title}
+        <Link
+          to={`/notices/${notice._id}`}
+          className="hover:text-blue-600 transition-colors"
+        >
+          {notice.title}
+        </Link>
+
       </h3>
 
       {/* Description */}

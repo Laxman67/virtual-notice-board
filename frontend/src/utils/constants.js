@@ -1,10 +1,9 @@
 export const CATEGORIES = [
   'Academic',
-  'Events', 
-  'General',
-  'Urgent',
-  'Examination',
-  'Holiday'
+  'Administrative',
+  'Events',
+  'Announcements',
+
 ]
 
 export const PRIORITIES = [
@@ -17,7 +16,7 @@ export const PRIORITIES = [
 export const ROLES = [
   { value: 'STUDENT', label: 'Student' },
   { value: 'FACULTY', label: 'Faculty' },
-  { value: 'ADMIN', label: 'Admin' }
+  // { value: 'ADMIN', label: 'Admin' }
 ]
 
 export const TARGET_AUDIENCE = [

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useParams, useNavigate, Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { noticeAPI } from '../api'
-import { 
+import {
   Calendar,
   Eye,
   Edit,
@@ -29,6 +29,7 @@ const NoticeDetail = () => {
     const fetchNotice = async () => {
       try {
         const response = await noticeAPI.getNotice(id)
+
         setNotice(response.data.data.notice)
       } catch (error) {
         console.error('Failed to fetch notice:', error)
@@ -102,7 +103,7 @@ const NoticeDetail = () => {
           </Link>
           <h1 className="text-2xl font-bold text-gray-900">{notice.title}</h1>
         </div>
-        
+
         {/* Actions */}
         <div className="flex items-center space-x-2">
           {canEdit && (

@@ -14,6 +14,7 @@ import {
 } from 'lucide-react'
 import LoadingSpinner from '../components/LoadingSpinner'
 import { CATEGORIES, PRIORITIES, TARGET_AUDIENCE } from '../utils/constants'
+import { toast } from 'react-toastify'
 
 const CreateNotice = () => {
   const { user } = useAuth()
@@ -99,6 +100,15 @@ const CreateNotice = () => {
       newErrors.category = 'Category is required'
     }
 
+    // Validate expiration date is in the future
+    if (formData.expiresAt) {
+      const expirationDate = new Date(formData.expiresAt)
+      const now = new Date()
+      if (expirationDate <= now) {
+        newErrors.expiresAt = 'Expiration date must be in the future'
+      }
+    }
+
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
   }
@@ -111,6 +121,7 @@ const CreateNotice = () => {
     setIsSubmitting(true)
     try {
       await noticeAPI.createNotice(formData)
+      toast.success('Notice created successfully!')
       navigate('/notices')
     } catch (error) {
       console.error('Failed to create notice:', error)
@@ -263,8 +274,13 @@ const CreateNotice = () => {
                 name="expiresAt"
                 value={formData.expiresAt}
                 onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                min={new Date().toISOString().slice(0, 16)}
+                className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm ${errors.expiresAt ? 'border-red-300' : 'border-gray-300'
+                  }`}
               />
+              {errors.expiresAt && (
+                <p className="mt-1 text-sm text-red-600">{errors.expiresAt}</p>
+              )}
             </div>
 
             {/* Tags */}

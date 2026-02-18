@@ -63,7 +63,7 @@ const Sidebar = ({ isOpen, onToggle }) => {
           label: 'Faculty Tools',
           icon: BookOpen,
           children: [
-            { path: '/faculty/create-notice', label: 'Create Notice', icon: FileText },
+            { path: '/notices/create', label: 'Create Notice', icon: FileText },
             { path: '/faculty/my-notices', label: 'My Notices', icon: FileText },
             { path: '/faculty/students', label: 'Students', icon: Users },
             { path: '/faculty/schedule', label: 'Schedule', icon: Calendar },
