@@ -2,14 +2,13 @@ import { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { noticeAPI } from '../api'
-import { 
-  Save, 
-  X, 
-  Calendar, 
-  Tag, 
-  Users, 
-  Flag, 
-  FileText,
+import {
+  Save,
+  X,
+  Calendar,
+  Tag,
+  Users,
+  Flag,
   AlertCircle,
   Trash2
 } from 'lucide-react'
@@ -41,7 +40,7 @@ const EditNotice = () => {
       try {
         const response = await noticeAPI.getNotice(id)
         const notice = response.data.data.notice
-        
+
         // Check if user can edit this notice
         if (user?.role !== 'ADMIN' && notice.postedBy?._id !== user?._id) {
           setError('You do not have permission to edit this notice')
@@ -78,7 +77,7 @@ const EditNotice = () => {
       ...prev,
       [name]: type === 'checkbox' ? checked : value
     }))
-    
+
     // Clear error when user starts typing
     if (formErrors[name]) {
       setFormErrors(prev => ({ ...prev, [name]: '' }))
@@ -87,12 +86,12 @@ const EditNotice = () => {
 
   const handleTargetAudienceChange = (value) => {
     setFormData(prev => {
-      const audience = prev.targetAudience.includes('ALL') 
-        ? [value] 
+      const audience = prev.targetAudience.includes('ALL')
+        ? [value]
         : prev.targetAudience.includes(value)
-        ? prev.targetAudience.filter(a => a !== value)
-        : [...prev.targetAudience, value]
-      
+          ? prev.targetAudience.filter(a => a !== value)
+          : [...prev.targetAudience, value]
+
       return { ...prev, targetAudience: audience }
     })
   }
@@ -120,7 +119,7 @@ const EditNotice = () => {
 
   const validateForm = () => {
     const newErrors = {}
-    
+
     if (!formData.title.trim()) {
       newErrors.title = 'Title is required'
     } else if (formData.title.length < 3) {
@@ -128,26 +127,26 @@ const EditNotice = () => {
     } else if (formData.title.length > 100) {
       newErrors.title = 'Title cannot exceed 100 characters'
     }
-    
+
     if (!formData.description.trim()) {
       newErrors.description = 'Description is required'
     } else if (formData.description.length < 10) {
       newErrors.description = 'Description must be at least 10 characters'
     }
-    
+
     if (!formData.category) {
       newErrors.category = 'Category is required'
     }
-    
+
     setFormErrors(newErrors)
     return Object.keys(newErrors).length === 0
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    
+
     if (!validateForm()) return
-    
+
     setIsSubmitting(true)
     try {
       await noticeAPI.updateNotice(id, formData)
@@ -200,7 +199,7 @@ const EditNotice = () => {
             {/* Title */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                <FileText className="w-4 h-4 inline mr-2" />
+                <MonitorStop className="w-4 h-4 inline mr-2" />
                 Notice Title *
               </label>
               <input
@@ -208,9 +207,8 @@ const EditNotice = () => {
                 name="title"
                 value={formData.title}
                 onChange={handleChange}
-                className={`w-full px-3 py-2 border rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm ${
-                  formErrors.title ? 'border-red-300' : 'border-gray-300'
-                }`}
+                className={`w-full px-3 py-2 border rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm ${formErrors.title ? 'border-red-300' : 'border-gray-300'
+                  }`}
                 placeholder="Enter notice title"
               />
               {formErrors.title && (
@@ -228,9 +226,8 @@ const EditNotice = () => {
                 value={formData.description}
                 onChange={handleChange}
                 rows={6}
-                className={`w-full px-3 py-2 border rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm ${
-                  formErrors.description ? 'border-red-300' : 'border-gray-300'
-                }`}
+                className={`w-full px-3 py-2 border rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm ${formErrors.description ? 'border-red-300' : 'border-gray-300'
+                  }`}
                 placeholder="Enter notice description"
               />
               {formErrors.description && (
@@ -248,9 +245,8 @@ const EditNotice = () => {
                   name="category"
                   value={formData.category}
                   onChange={handleChange}
-                  className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm ${
-                    formErrors.category ? 'border-red-300' : 'border-gray-300'
-                  }`}
+                  className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm ${formErrors.category ? 'border-red-300' : 'border-gray-300'
+                    }`}
                 >
                   <option value="">Select a category</option>
                   {CATEGORIES.map(category => (

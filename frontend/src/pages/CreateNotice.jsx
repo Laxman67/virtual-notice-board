@@ -9,8 +9,9 @@ import {
   Tag,
   Users,
   Flag,
-  FileText,
-  AlertCircle
+
+  AlertCircle,
+  MonitorStop
 } from 'lucide-react'
 import LoadingSpinner from '../components/LoadingSpinner'
 import { CATEGORIES, PRIORITIES, TARGET_AUDIENCE } from '../utils/constants'
@@ -163,7 +164,7 @@ const CreateNotice = () => {
             {/* Title */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                <FileText className="w-4 h-4 inline mr-2" />
+                <MonitorStop className="w-4 h-4 inline mr-2" />
                 Notice Title *
               </label>
               <input

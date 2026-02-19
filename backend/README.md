@@ -1,6 +1,6 @@
-# Digital Notice Board - Backend
+# Virtual Notice Board - Backend
 
-A robust Node.js/Express backend for the Digital Notice Board application with real-time features, JWT authentication, and role-based access control.
+A robust Node.js/Express backend for the Virtual Notice Board application with real-time features, JWT authentication, and role-based access control.
 
 ## 🚀 Features
 
@@ -53,7 +53,7 @@ backend/
 1. **Clone the repository**
    ```bash
    git clone <repository-url>
-   cd digital-notice-board/backend
+   cd virtual-notice-board/backend
    ```
 
 2. **Install dependencies**
@@ -65,7 +65,7 @@ backend/
    ```bash
    cp .env.example .env
    ```
-   
+
    Edit `.env` with your configuration:
    ```env
    # Server Configuration
@@ -74,7 +74,7 @@ backend/
    FRONTEND_URL=http://localhost:5173
 
    # Database Configuration
-   MONGODB_URI=mongodb://localhost:27017/digital-notice-board
+   MONGODB_URI=mongodb://localhost:27017/virtual-notice-board
 
    # JWT Configuration
    JWT_SECRET=your-super-secret-jwt-key

@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { noticeAPI } from '../api'
 import {
-  FileText,
   Users,
   TrendingUp,
   Bell,
@@ -13,7 +12,8 @@ import {
   BarChart3,
   Activity,
   Clock,
-  CheckCircle
+  CheckCircle,
+  MonitorStop
 } from 'lucide-react'
 import LoadingSpinner from '../components/LoadingSpinner'
 import { formatDate } from '../utils/helpers'
@@ -165,7 +165,7 @@ const Dashboard = () => {
           <StatCard
             title="Total Notices"
             value={stats.totalNotices || 0}
-            icon={FileText}
+            icon={MonitorStop}
             color="blue"
             trend={12}
           />
@@ -199,7 +199,7 @@ const Dashboard = () => {
           <StatCard
             title="Total Notices"
             value={notices.length}
-            icon={FileText}
+            icon={MonitorStop}
             color="blue"
           />
           <StatCard
@@ -222,7 +222,7 @@ const Dashboard = () => {
         <QuickActionCard
           title="View All Notices"
           description="Browse all available notices"
-          icon={FileText}
+          icon={MonitorStop}
           to="/notices"
           color="blue"
         />
@@ -284,7 +284,7 @@ const Dashboard = () => {
         <div className="divide-y divide-gray-200">
           {notices.length === 0 ? (
             <div className="p-8 text-center">
-              <FileText className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+              <MonitorStop className="w-12 h-12 text-gray-400 mx-auto mb-4" />
               <p className="text-gray-500">No notices found</p>
               {(user?.role === 'FACULTY' || user?.role === 'ADMIN') && (
                 <Link

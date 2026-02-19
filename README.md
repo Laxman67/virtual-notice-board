@@ -5,11 +5,9 @@ A modern, real-time digital notice board application built with the MERN stack. 
 
 ## 🚀 Key Features
 
-- **Real-time Updates** - Instant notifications using Socket.IO
 - **Role-Based Access Control** - Admin, Faculty, and Student roles with granular permissions
 - **Rich Notice Management** - Create, categorize, and prioritize notices with file attachments
 - **Secure Authentication** - JWT-based authentication with bcrypt password hashing
-- **File Upload Support** - Cloudinary integration for seamless file sharing
 - **View Analytics** - Track notice views and engagement metrics
 - **Responsive Design** - Modern UI built with React, Vite, and Tailwind CSS
 - **Targeted Messaging** - Send notices to specific user groups or all users
@@ -19,9 +17,7 @@ A modern, real-time digital notice board application built with the MERN stack. 
 ### Backend
 - **Node.js** with Express.js
 - **MongoDB** with Mongoose ODM
-- **Socket.IO** for real-time communication
 - **JWT** for secure authentication
-- **Cloudinary** for file storage
 - **bcrypt** for password hashing
 
 ### Frontend
@@ -42,7 +38,7 @@ A modern, real-time digital notice board application built with the MERN stack. 
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/virtual-notice-board.git
+   git clone https://github.com/Laxman67/virtual-notice-board
    cd virtual-notice-board
    ```
 
@@ -51,7 +47,7 @@ A modern, real-time digital notice board application built with the MERN stack. 
    # Backend
    cd backend
    npm install
-   
+
    # Frontend
    cd ../frontend
    npm install
@@ -70,7 +66,7 @@ A modern, real-time digital notice board application built with the MERN stack. 
    # Backend (Terminal 1)
    cd backend
    npm run dev
-   
+
    # Frontend (Terminal 2)
    cd frontend
    npm run dev
@@ -90,7 +86,6 @@ virtual-notice-board/
 │   ├── middleware/         # Custom middleware
 │   ├── models/            # MongoDB models
 │   ├── routes/            # API routes
-│   ├── sockets/           # Socket.IO handlers
 │   └── utils/             # Utility functions
 ├── frontend/               # React application
 │   ├── src/

@@ -4,7 +4,6 @@ import { useAuth } from '../context/AuthContext'
 import { noticeAPI } from '../api'
 import {
   Users,
-  FileText,
   TrendingUp,
   Eye,
   BarChart3,
@@ -13,7 +12,8 @@ import {
   Clock,
   AlertTriangle,
   Plus,
-  Settings
+  Settings,
+  MonitorStop
 } from 'lucide-react'
 import LoadingSpinner from '../components/LoadingSpinner'
 import { formatDate } from '../utils/helpers'
@@ -151,7 +151,7 @@ const AdminDashboard = () => {
         <StatCard
           title="Total Notices"
           value={stats.totalNotices || 0}
-          icon={FileText}
+          icon={MonitorStop}
           color="blue"
           change={12}
         />
@@ -218,7 +218,8 @@ const AdminDashboard = () => {
             className="flex items-center space-x-3 p-4 border border-gray-200 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-colors"
           >
             <div className="p-2 bg-blue-100 rounded-lg">
-              <FileText className="w-5 h-5 text-blue-600" />
+              <  MonitorStop
+                className="w-5 h-5 text-blue-600" />
             </div>
             <div>
               <h3 className="font-medium text-gray-900">Manage Notices</h3>
@@ -273,7 +274,7 @@ const AdminDashboard = () => {
         <div className="divide-y divide-gray-200">
           {recentNotices.length === 0 ? (
             <div className="p-8 text-center">
-              <FileText className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+              <MonitorStop className="w-12 h-12 text-gray-400 mx-auto mb-4" />
               <p className="text-gray-500">No notices found</p>
               <Link
                 to="/notices/create"

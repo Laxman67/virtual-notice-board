@@ -15,6 +15,7 @@ import authRoutes from './routes/auth.routes.js';
 import noticeRoutes from './routes/notice.routes.js';
 import userRoutes from './routes/user.routes.js';
 import notificationRoutes from './routes/notification.routes.js';
+import errorMiddleware from './utils/authMiddleware.js';
 
 // Load environment variables
 dotenv.config();
@@ -63,14 +64,7 @@ app.get('/health', (req, res) => {
 });
 
 // Error handling middleware
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({
-    success: false,
-    message: 'Something went wrong!',
-    error: process.env.NODE_ENV === 'development' ? err.message : 'Internal server error'
-  });
-});
+app.use(errorMiddleware);
 
 // 404 handler
 app.use('*', (req, res) => {

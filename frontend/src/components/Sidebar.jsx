@@ -2,20 +2,19 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import {
   Home,
-  FileText,
   Users,
   Calendar,
   Settings,
   BookOpen,
-  Bell,
   BarChart3,
   User,
   LogOut,
-  Menu,
   X,
-  ChevronDown
+  ChevronDown,
+  MonitorStop
 } from 'lucide-react'
 import { useState } from 'react'
+
 
 const Sidebar = ({ isOpen, onToggle }) => {
   const { user, logout } = useAuth()
@@ -41,7 +40,7 @@ const Sidebar = ({ isOpen, onToggle }) => {
   const getMenuItems = () => {
     const baseItems = [
       { path: '/dashboard', label: 'Dashboard', icon: Home },
-      { path: '/notices', label: 'Notices', icon: FileText },
+      { path: '/notices', label: 'Notices', icon: MonitorStop },
       { path: '/profile', label: 'Profile', icon: User },
     ]
 
@@ -52,7 +51,7 @@ const Sidebar = ({ isOpen, onToggle }) => {
           icon: Settings,
           children: [
             { path: '/admin/users', label: 'Manage Users', icon: Users },
-            { path: '/admin/notices', label: 'Manage Notices', icon: FileText },
+            { path: '/admin/notices', label: 'Manage Notices', icon: MonitorStop },
             { path: '/admin/settings', label: 'Settings', icon: Settings },
             { path: '/admin/analytics', label: 'Analytics', icon: BarChart3 },
           ]
@@ -63,8 +62,8 @@ const Sidebar = ({ isOpen, onToggle }) => {
           label: 'Faculty Tools',
           icon: BookOpen,
           children: [
-            { path: '/notices/create', label: 'Create Notice', icon: FileText },
-            { path: '/faculty/my-notices', label: 'My Notices', icon: FileText },
+            { path: '/notices/create', label: 'Create Notice', icon: MonitorStop },
+            { path: '/faculty/my-notices', label: 'My Notices', icon: MonitorStop },
             { path: '/faculty/students', label: 'Students', icon: Users },
             { path: '/faculty/schedule', label: 'Schedule', icon: Calendar },
           ]
@@ -76,7 +75,7 @@ const Sidebar = ({ isOpen, onToggle }) => {
       //     icon: BookOpen,
       //     children: [
       //       { path: '/student/courses', label: 'Courses', icon: BookOpen },
-      //       { path: '/student/assignments', label: 'Assignments', icon: FileText },
+      //       { path: '/student/assignments', label: 'Assignments', icon: MonitorStop },
       //       { path: '/student/grades', label: 'Grades', icon: BarChart3 },
       //       { path: '/student/calendar', label: 'Calendar', icon: Calendar },
       //     ]
@@ -155,8 +154,8 @@ const Sidebar = ({ isOpen, onToggle }) => {
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-gray-200">
           <div className="flex items-center space-x-2">
-            <FileText className="w-6 h-6 text-blue-600" />
-            <span className="text-lg font-bold text-gray-900">Notice Board</span>
+            <MonitorStop className="w-6 h-6 text-blue-600" />
+            <span className="text-lg font-bold text-gray-900">Virtual Notice Board</span>
           </div>
           {/* Mobile menu toggle button */}
           <button

@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 
 const generateToken = (payload) => {
   return jwt.sign(payload, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRE || '7d',
+    expiresIn: process.env.JWT_EXPIRE || '15m',
   });
 };
 
@@ -13,20 +13,14 @@ const verifyToken = (token) => {
 
 const generateRefreshToken = (payload) => {
   return jwt.sign(payload, process.env.JWT_SECRET, {
-    expiresIn: '30d',
+    expiresIn: '2d',
   });
 };
 
-const extractTokenFromHeader = (authHeader) => {
-  if (authHeader && authHeader.startsWith('Bearer ')) {
-    return authHeader.substring(7);
-  }
-  return null;
-};
+
 
 export {
   generateToken,
   verifyToken,
   generateRefreshToken,
-  extractTokenFromHeader
 };

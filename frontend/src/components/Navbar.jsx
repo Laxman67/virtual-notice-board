@@ -3,10 +3,10 @@ import { useAuth } from '../context/AuthContext'
 import { memo, useCallback, useMemo } from 'react'
 import {
   Home,
-  FileText,
   User,
   Settings,
-  LogOut
+  LogOut,
+  MonitorStop
 } from 'lucide-react'
 
 const Navbar = memo(() => {
@@ -24,7 +24,7 @@ const Navbar = memo(() => {
   const navItems = useMemo(() => {
     const items = [
       { path: '/dashboard', label: 'Dashboard', icon: Home },
-      { path: '/notices', label: 'Notices', icon: FileText },
+      { path: '/notices', label: 'Notices', icon: MonitorStop },
       { path: '/profile', label: 'Profile', icon: User },
     ]
 

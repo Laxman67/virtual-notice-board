@@ -4,7 +4,7 @@ import { useAuth } from '../context/AuthContext'
 import { noticeAPI } from '../api'
 import NoticeCard from '../components/NoticeCard'
 import LoadingSpinner from '../components/LoadingSpinner'
-import { Search, Plus, FileText } from 'lucide-react'
+import { Search, Plus, MonitorStop } from 'lucide-react'
 import { CATEGORIES, PRIORITIES } from '../utils/constants'
 import { debounce } from '../utils/helpers'
 
@@ -226,7 +226,7 @@ const Notices = () => {
 
         {notices.length === 0 ? (
           <div className="p-8 text-center">
-            <FileText className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+            <MonitorStop className="w-12 h-12 text-gray-400 mx-auto mb-4" />
             <p className="text-gray-500">No notices found</p>
             {(user?.role === 'FACULTY' || user?.role === 'ADMIN') && (
               <Link
