@@ -7,6 +7,8 @@ import Login from './pages/Login'
 import StudentLogin from './pages/StudentLogin'
 import FacultyLogin from './pages/FacultyLogin'
 import AdminLogin from './pages/AdminLogin'
+import ForgotPassword from './pages/ForgotPassword'
+import ResetPassword from './pages/ResetPassword'
 import Register from './pages/Register'
 import StudentRegister from './pages/StudentRegister'
 import FacultyRegister from './pages/FacultyRegister'
@@ -55,6 +57,16 @@ function App() {
       <Route
         path="/register"
         element={!user ? <Register /> : <Navigate to="/dashboard" replace />}
+      />
+
+      {/* Password Reset Routes */}
+      <Route
+        path="/forgot-password"
+        element={!user ? <ForgotPassword /> : <Navigate to="/dashboard" replace />}
+      />
+      <Route
+        path="/reset-password"
+        element={!user ? <ResetPassword /> : <Navigate to="/dashboard" replace />}
       />
 
       {/* Role-Specific Login Routes */}

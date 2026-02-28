@@ -105,6 +105,36 @@ export const AuthProvider = ({ children }) => {
     }
   }
 
+  const forgotPassword = async (email) => {
+    try {
+      setLoading(true)
+      const response = await authAPI.forgotPassword(email)
+      toast.success('Password reset link has been sent to your email!')
+      return { success: true }
+    } catch (error) {
+      const message = error.response?.data?.message || 'Failed to send reset email'
+      toast.error(message)
+      return { success: false, error: message }
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const resetPassword = async (token, newPassword) => {
+    try {
+      setLoading(true)
+      const response = await authAPI.resetPassword(token, newPassword)
+      toast.success('Password has been reset successfully!')
+      return { success: true }
+    } catch (error) {
+      const message = error.response?.data?.message || 'Failed to reset password'
+      toast.error(message)
+      return { success: false, error: message }
+    } finally {
+      setLoading(false)
+    }
+  }
+
   const value = {
     user,
     isAuthenticated,
@@ -112,7 +142,9 @@ export const AuthProvider = ({ children }) => {
     login,
     register,
     logout,
-    updateProfile
+    updateProfile,
+    forgotPassword,
+    resetPassword
   }
 
   return (

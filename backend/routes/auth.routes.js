@@ -6,10 +6,12 @@ import {
   logout,
   getProfile,
   updateProfile,
-  changePassword
+  changePassword,
+  forgotPassword,
+  resetPassword
 } from '../controller/auth.controller.js';
 import authenticateToken from '../middleware/authenticateToken.js';
-import { changePasswordValidation, loginValidation, registerValidation, updateProfileValidation } from '../validations/auth.validations.js';
+import { changePasswordValidation, loginValidation, registerValidation, updateProfileValidation, forgotPasswordValidation, resetPasswordValidation } from '../validations/auth.validations.js';
 
 const router = express.Router();
 
@@ -19,6 +21,8 @@ const router = express.Router();
 router.post('/register', registerValidation, register);
 router.post('/login', loginValidation, login);
 router.post('/logout', logout);
+router.post('/forgot-password', forgotPasswordValidation, forgotPassword);
+router.post('/reset-password', resetPasswordValidation, resetPassword);
 
 // Protected routes
 router.get('/profile', authenticateToken, getProfile);
