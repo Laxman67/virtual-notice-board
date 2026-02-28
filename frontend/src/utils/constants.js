@@ -16,7 +16,7 @@ export const PRIORITIES = [
 export const ROLES = [
   { value: 'STUDENT', label: 'Student' },
   { value: 'FACULTY', label: 'Faculty' },
-  // { value: 'ADMIN', label: 'Admin' }
+  { value: 'ADMIN', label: 'Admin' }
 ]
 
 export const TARGET_AUDIENCE = [

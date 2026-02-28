@@ -246,15 +246,15 @@ const Dashboard = () => {
           </>
         )}
 
-        <QuickActionCard
+        {/* <QuickActionCard
           title="My Profile"
           description="Update your profile information"
           icon={Users}
           to="/profile"
           color="orange"
-        />
+        /> */}
 
-        {user?.role === 'ADMIN' && (
+        {/* {user?.role === 'ADMIN' && (
           <QuickActionCard
             title="Admin Panel"
             description="View admin statistics"
@@ -262,7 +262,7 @@ const Dashboard = () => {
             to="/admin"
             color="red"
           />
-        )}
+        )} */}
       </div>
 
       {/* Recent Notices */}

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
-import { User, Mail, Lock, Eye, EyeOff } from 'lucide-react'
+import { User, Mail, Lock, Eye, EyeOff, GraduationCap, Award, Shield } from 'lucide-react'
 import LoadingSpinner from '../components/LoadingSpinner'
 
 const Login = () => {
@@ -61,13 +61,25 @@ const Login = () => {
   }
 
   return (
-    <div className="min-h-screen w-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
-        <div>
+    <div className="min-h-screen w-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+      {/* Background Pattern */}
+      <div className="absolute inset-0 opacity-20">
+        <div className="absolute inset-0" style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%236366f1' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+        }}></div>
+      </div>
+      {/* Decorative Blurred Shapes */}
+      <div className="absolute inset-0 opacity-10">
+        <div className="absolute top-0 left-0 w-96 h-96 bg-blue-400 rounded-full filter blur-3xl"></div>
+        <div className="absolute top-1/2 right-0 w-96 h-96 bg-purple-400 rounded-full filter blur-3xl"></div>
+        <div className="absolute bottom-0 left-1/2 w-96 h-96 bg-indigo-400 rounded-full filter blur-3xl"></div>
+      </div>
+      <div className="max-w-md w-full space-y-8 relative z-10">
+        <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-8 border border-white/20">
           <div className="flex justify-center">
             <div className="flex items-center space-x-2">
               <User className="w-12 h-12 text-blue-600" />
-              <span className="text-3xl font-bold text-gray-900">NoticeBoard</span>
+              <span className="text-3xl font-bold text-gray-900">Virtual Notice Board</span>
             </div>
           </div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
@@ -81,88 +93,40 @@ const Login = () => {
           </p>
         </div>
 
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-          <div className="space-y-4">
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                Email address
-              </label>
-              <div className="mt-1 relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Mail className="h-5 w-5 text-gray-400" />
-                </div>
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  required
-                  value={formData.email}
-                  onChange={handleChange}
-                  className={`appearance-none block w-full pl-10 pr-3 py-2 border rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm ${errors.email ? 'border-red-300' : 'border-gray-300'
-                    }`}
-                  placeholder="Enter your email"
-                />
-              </div>
-              {errors.email && (
-                <p className="mt-1 text-sm text-red-600">{errors.email}</p>
-              )}
-            </div>
-
-            <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                Password
-              </label>
-              <div className="mt-1 relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Lock className="h-5 w-5 text-gray-400" />
-                </div>
-                <input
-                  id="password"
-                  name="password"
-                  type={showPassword ? 'text' : 'password'}
-                  autoComplete="current-password"
-                  required
-                  value={formData.password}
-                  onChange={handleChange}
-                  className={`appearance-none block w-full pl-10 pr-10 py-2 border rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm ${errors.password ? 'border-red-300' : 'border-gray-300'
-                    }`}
-                  placeholder="Enter your password"
-                />
-                <button
-                  type="button"
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center"
-                  onClick={() => setShowPassword(!showPassword)}
-                >
-                  {showPassword ? (
-                    <EyeOff className="h-5 w-5 text-gray-400" />
-                  ) : (
-                    <Eye className="h-5 w-5 text-gray-400" />
-                  )}
-                </button>
-              </div>
-              {errors.password && (
-                <p className="mt-1 text-sm text-red-600">{errors.password}</p>
-              )}
-            </div>
-          </div>
-
-          <div >
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full bg-blue-600 rounded-md py-2 text-white"
+        {/* Role-Specific Links */}
+        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-4 mb-6 border border-blue-100">
+          <p className="text-center text-sm font-medium text-blue-800 mb-3">
+            Sign in as specific role:
+          </p>
+          <div className="flex justify-center space-x-3">
+            <Link
+              to="/login/student"
+              className="flex items-center px-3 py-2 bg-white text-blue-700 rounded-lg hover:bg-blue-50 transition-all text-sm shadow-sm border border-blue-200"
             >
-              {loading ? (
-                <LoadingSpinner size="sm" />
-              ) : (
-                'Sign in'
-              )}
-            </button>
+              <GraduationCap className="w-4 h-4 mr-1" />
+              Student
+            </Link>
+            <Link
+              to="/login/faculty"
+              className="flex items-center px-3 py-2 bg-white text-emerald-700 rounded-lg hover:bg-emerald-50 transition-all text-sm shadow-sm border border-emerald-200"
+            >
+              <Award className="w-4 h-4 mr-1" />
+              Faculty
+            </Link>
+            <Link
+              to="/login/admin"
+              className="flex items-center px-3 py-2 bg-white text-purple-700 rounded-lg hover:bg-purple-50 transition-all text-sm shadow-sm border border-purple-200"
+            >
+              <Shield className="w-4 h-4 mr-1" />
+              Admin
+            </Link>
           </div>
-        </form>
+        </div>
+
+
       </div>
     </div>
+    // </div >
   )
 }
 

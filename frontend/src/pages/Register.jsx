@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
-import { User, Mail, Lock, Building, Eye, EyeOff } from 'lucide-react'
+import { User, Mail, Lock, Building, Eye, EyeOff, GraduationCap, Award, Shield } from 'lucide-react'
 import LoadingSpinner from '../components/LoadingSpinner'
 import { ROLES } from '../utils/constants'
 
@@ -29,34 +29,34 @@ const Register = () => {
 
   const validateForm = () => {
     const newErrors = {}
-    
+
     if (!formData.name) {
       newErrors.name = 'Name is required'
     } else if (formData.name.length < 2) {
       newErrors.name = 'Name must be at least 2 characters'
     }
-    
+
     if (!formData.email) {
       newErrors.email = 'Email is required'
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = 'Email is invalid'
     }
-    
+
     if (!formData.password) {
       newErrors.password = 'Password is required'
     } else if (formData.password.length < 6) {
       newErrors.password = 'Password must be at least 6 characters'
     }
-    
+
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    
+
     if (!validateForm()) return
-    
+
     const result = await register(formData)
     if (result.success) {
       navigate('/dashboard')
@@ -91,7 +91,37 @@ const Register = () => {
             </Link>
           </p>
         </div>
-        
+
+        {/* Role-Specific Registration Links */}
+        <div className="bg-blue-50 rounded-lg p-4 mb-6">
+          <p className="text-center text-sm font-medium text-blue-800 mb-3">
+            Register as specific role:
+          </p>
+          <div className="flex justify-center space-x-4">
+            <Link
+              to="/register/student"
+              className="flex items-center px-3 py-2 bg-blue-100 text-blue-700 rounded-md hover:bg-blue-200 transition-colors text-sm"
+            >
+              <GraduationCap className="w-4 h-4 mr-1" />
+              Student
+            </Link>
+            <Link
+              to="/register/faculty"
+              className="flex items-center px-3 py-2 bg-emerald-100 text-emerald-700 rounded-md hover:bg-emerald-200 transition-colors text-sm"
+            >
+              <Award className="w-4 h-4 mr-1" />
+              Faculty
+            </Link>
+            <Link
+              to="/register/admin"
+              className="flex items-center px-3 py-2 bg-purple-100 text-purple-700 rounded-md hover:bg-purple-200 transition-colors text-sm"
+            >
+              <Shield className="w-4 h-4 mr-1" />
+              Admin
+            </Link>
+          </div>
+        </div>
+
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div className="space-y-4">
             <div>
@@ -109,9 +139,8 @@ const Register = () => {
                   required
                   value={formData.name}
                   onChange={handleChange}
-                  className={`appearance-none block w-full pl-10 pr-3 py-2 border rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm ${
-                    errors.name ? 'border-red-300' : 'border-gray-300'
-                  }`}
+                  className={`appearance-none block w-full pl-10 pr-3 py-2 border rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm ${errors.name ? 'border-red-300' : 'border-gray-300'
+                    }`}
                   placeholder="Enter your full name"
                 />
               </div>
@@ -136,9 +165,8 @@ const Register = () => {
                   required
                   value={formData.email}
                   onChange={handleChange}
-                  className={`appearance-none block w-full pl-10 pr-3 py-2 border rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm ${
-                    errors.email ? 'border-red-300' : 'border-gray-300'
-                  }`}
+                  className={`appearance-none block w-full pl-10 pr-3 py-2 border rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm ${errors.email ? 'border-red-300' : 'border-gray-300'
+                    }`}
                   placeholder="Enter your email"
                 />
               </div>
@@ -162,9 +190,8 @@ const Register = () => {
                   required
                   value={formData.password}
                   onChange={handleChange}
-                  className={`appearance-none block w-full pl-10 pr-10 py-2 border rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm ${
-                    errors.password ? 'border-red-300' : 'border-gray-300'
-                  }`}
+                  className={`appearance-none block w-full pl-10 pr-10 py-2 border rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm ${errors.password ? 'border-red-300' : 'border-gray-300'
+                    }`}
                   placeholder="Create a password"
                 />
                 <button
