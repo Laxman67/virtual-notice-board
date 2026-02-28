@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
-import { useAuth } from '../context/AuthContext'
-import { noticeAPI } from '../api'
+import { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import { noticeAPI } from '../api';
 import {
   Save,
   X,
@@ -10,18 +10,19 @@ import {
   Users,
   Flag,
   AlertCircle,
-  Trash2
-} from 'lucide-react'
-import LoadingSpinner from '../components/LoadingSpinner'
-import { CATEGORIES, PRIORITIES, TARGET_AUDIENCE } from '../utils/constants'
+  Trash2,
+  MonitorStop,
+} from 'lucide-react';
+import LoadingSpinner from '../components/LoadingSpinner';
+import { CATEGORIES, PRIORITIES, TARGET_AUDIENCE } from '../utils/constants';
 
 const EditNotice = () => {
-  const { user } = useAuth()
-  const navigate = useNavigate()
-  const { id } = useParams()
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
+  const { user } = useAuth();
+  const navigate = useNavigate();
+  const { id } = useParams();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -30,22 +31,22 @@ const EditNotice = () => {
     priority: 'MEDIUM',
     expiresAt: '',
     tags: [],
-    isPinned: false
-  })
-  const [formErrors, setFormErrors] = useState({})
-  const [tagInput, setTagInput] = useState('')
+    isPinned: false,
+  });
+  const [formErrors, setFormErrors] = useState({});
+  const [tagInput, setTagInput] = useState('');
 
   useEffect(() => {
     const fetchNotice = async () => {
       try {
-        const response = await noticeAPI.getNotice(id)
-        const notice = response.data.data.notice
+        const response = await noticeAPI.getNotice(id);
+        const notice = response.data.data.notice;
 
         // Check if user can edit this notice
         if (user?.role !== 'ADMIN' && notice.postedBy?._id !== user?._id) {
-          setError('You do not have permission to edit this notice')
-          setLoading(false)
-          return
+          setError('You do not have permission to edit this notice');
+          setLoading(false);
+          return;
         }
 
         setFormData({
@@ -54,117 +55,119 @@ const EditNotice = () => {
           category: notice.category || '',
           targetAudience: notice.targetAudience || ['ALL'],
           priority: notice.priority || 'MEDIUM',
-          expiresAt: notice.expiresAt ? new Date(notice.expiresAt).toISOString().slice(0, 16) : '',
+          expiresAt: notice.expiresAt
+            ? new Date(notice.expiresAt).toISOString().slice(0, 16)
+            : '',
           tags: notice.tags || [],
-          isPinned: notice.isPinned || false
-        })
+          isPinned: notice.isPinned || false,
+        });
       } catch (error) {
-        console.error('Failed to fetch notice:', error)
-        setError(error.response?.data?.message || 'Failed to fetch notice')
+        console.error('Failed to fetch notice:', error);
+        setError(error.response?.data?.message || 'Failed to fetch notice');
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
-    }
+    };
 
     if (id) {
-      fetchNotice()
+      fetchNotice();
     }
-  }, [id, user])
+  }, [id, user]);
 
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target
-    setFormData(prev => ({
+    const { name, value, type, checked } = e.target;
+    setFormData((prev) => ({
       ...prev,
-      [name]: type === 'checkbox' ? checked : value
-    }))
+      [name]: type === 'checkbox' ? checked : value,
+    }));
 
     // Clear error when user starts typing
     if (formErrors[name]) {
-      setFormErrors(prev => ({ ...prev, [name]: '' }))
+      setFormErrors((prev) => ({ ...prev, [name]: '' }));
     }
-  }
+  };
 
   const handleTargetAudienceChange = (value) => {
-    setFormData(prev => {
+    setFormData((prev) => {
       const audience = prev.targetAudience.includes('ALL')
         ? [value]
         : prev.targetAudience.includes(value)
-          ? prev.targetAudience.filter(a => a !== value)
-          : [...prev.targetAudience, value]
+          ? prev.targetAudience.filter((a) => a !== value)
+          : [...prev.targetAudience, value];
 
-      return { ...prev, targetAudience: audience }
-    })
-  }
+      return { ...prev, targetAudience: audience };
+    });
+  };
 
   const addTag = (e) => {
     if (e.key === 'Enter' && tagInput.trim()) {
-      e.preventDefault()
-      const newTag = tagInput.trim()
+      e.preventDefault();
+      const newTag = tagInput.trim();
       if (!formData.tags.includes(newTag)) {
-        setFormData(prev => ({
+        setFormData((prev) => ({
           ...prev,
-          tags: [...prev.tags, newTag]
-        }))
+          tags: [...prev.tags, newTag],
+        }));
       }
-      setTagInput('')
+      setTagInput('');
     }
-  }
+  };
 
   const removeTag = (tagToRemove) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      tags: prev.tags.filter(tag => tag !== tagToRemove)
-    }))
-  }
+      tags: prev.tags.filter((tag) => tag !== tagToRemove),
+    }));
+  };
 
   const validateForm = () => {
-    const newErrors = {}
+    const newErrors = {};
 
     if (!formData.title.trim()) {
-      newErrors.title = 'Title is required'
+      newErrors.title = 'Title is required';
     } else if (formData.title.length < 3) {
-      newErrors.title = 'Title must be at least 3 characters'
+      newErrors.title = 'Title must be at least 3 characters';
     } else if (formData.title.length > 100) {
-      newErrors.title = 'Title cannot exceed 100 characters'
+      newErrors.title = 'Title cannot exceed 100 characters';
     }
 
     if (!formData.description.trim()) {
-      newErrors.description = 'Description is required'
+      newErrors.description = 'Description is required';
     } else if (formData.description.length < 10) {
-      newErrors.description = 'Description must be at least 10 characters'
+      newErrors.description = 'Description must be at least 10 characters';
     }
 
     if (!formData.category) {
-      newErrors.category = 'Category is required'
+      newErrors.category = 'Category is required';
     }
 
-    setFormErrors(newErrors)
-    return Object.keys(newErrors).length === 0
-  }
+    setFormErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    if (!validateForm()) return
+    if (!validateForm()) return;
 
-    setIsSubmitting(true)
+    setIsSubmitting(true);
     try {
-      await noticeAPI.updateNotice(id, formData)
-      navigate(`/notices/${id}`)
+      await noticeAPI.updateNotice(id, formData);
+      navigate(`/notices/${id}`);
     } catch (error) {
-      console.error('Failed to update notice:', error)
-      alert(error.response?.data?.message || 'Failed to update notice')
+      console.error('Failed to update notice:', error);
+      alert(error.response?.data?.message || 'Failed to update notice');
     } finally {
-      setIsSubmitting(false)
+      setIsSubmitting(false);
     }
-  }
+  };
 
   if (loading) {
     return (
       <div className="flex justify-center items-center h-64">
         <LoadingSpinner size="lg" />
       </div>
-    )
+    );
   }
 
   if (error) {
@@ -174,7 +177,7 @@ const EditNotice = () => {
         <h2 className="text-lg font-semibold text-gray-900 mb-2">Error</h2>
         <p className="text-gray-600">{error}</p>
       </div>
-    )
+    );
   }
 
   return (
@@ -207,8 +210,9 @@ const EditNotice = () => {
                 name="title"
                 value={formData.title}
                 onChange={handleChange}
-                className={`w-full px-3 py-2 border rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm ${formErrors.title ? 'border-red-300' : 'border-gray-300'
-                  }`}
+                className={`w-full px-3 py-2 border rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm ${
+                  formErrors.title ? 'border-red-300' : 'border-gray-300'
+                }`}
                 placeholder="Enter notice title"
               />
               {formErrors.title && (
@@ -226,12 +230,15 @@ const EditNotice = () => {
                 value={formData.description}
                 onChange={handleChange}
                 rows={6}
-                className={`w-full px-3 py-2 border rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm ${formErrors.description ? 'border-red-300' : 'border-gray-300'
-                  }`}
+                className={`w-full px-3 py-2 border rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm ${
+                  formErrors.description ? 'border-red-300' : 'border-gray-300'
+                }`}
                 placeholder="Enter notice description"
               />
               {formErrors.description && (
-                <p className="mt-1 text-sm text-red-600">{formErrors.description}</p>
+                <p className="mt-1 text-sm text-red-600">
+                  {formErrors.description}
+                </p>
               )}
             </div>
 
@@ -245,16 +252,21 @@ const EditNotice = () => {
                   name="category"
                   value={formData.category}
                   onChange={handleChange}
-                  className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm ${formErrors.category ? 'border-red-300' : 'border-gray-300'
-                    }`}
+                  className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm ${
+                    formErrors.category ? 'border-red-300' : 'border-gray-300'
+                  }`}
                 >
                   <option value="">Select a category</option>
-                  {CATEGORIES.map(category => (
-                    <option key={category} value={category}>{category}</option>
+                  {CATEGORIES.map((category) => (
+                    <option key={category} value={category}>
+                      {category}
+                    </option>
                   ))}
                 </select>
                 {formErrors.category && (
-                  <p className="mt-1 text-sm text-red-600">{formErrors.category}</p>
+                  <p className="mt-1 text-sm text-red-600">
+                    {formErrors.category}
+                  </p>
                 )}
               </div>
 
@@ -269,7 +281,7 @@ const EditNotice = () => {
                   onChange={handleChange}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                 >
-                  {PRIORITIES.map(priority => (
+                  {PRIORITIES.map((priority) => (
                     <option key={priority.value} value={priority.value}>
                       {priority.label}
                     </option>
@@ -285,15 +297,19 @@ const EditNotice = () => {
                 Target Audience
               </label>
               <div className="space-y-2">
-                {TARGET_AUDIENCE.map(audience => (
+                {TARGET_AUDIENCE.map((audience) => (
                   <label key={audience.value} className="flex items-center">
                     <input
                       type="checkbox"
                       checked={formData.targetAudience.includes(audience.value)}
-                      onChange={() => handleTargetAudienceChange(audience.value)}
+                      onChange={() =>
+                        handleTargetAudienceChange(audience.value)
+                      }
                       className="mr-2"
                     />
-                    <span className="text-sm text-gray-700">{audience.label}</span>
+                    <span className="text-sm text-gray-700">
+                      {audience.label}
+                    </span>
                   </label>
                 ))}
               </div>
@@ -391,7 +407,7 @@ const EditNotice = () => {
         </div>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default EditNotice
+export default EditNotice;
