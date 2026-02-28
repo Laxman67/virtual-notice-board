@@ -8,6 +8,8 @@ A modern, real-time digital notice board application built with the MERN stack. 
 - **Role-Based Access Control** - Admin, Faculty, and Student roles with granular permissions
 - **Rich Notice Management** - Create, categorize, and prioritize notices with file attachments
 - **Secure Authentication** - JWT-based authentication with bcrypt password hashing
+- **Password Recovery** - Forgot password functionality with email verification
+- **Email Notifications** - Automated email notifications for important updates
 - **View Analytics** - Track notice views and engagement metrics
 - **Responsive Design** - Modern UI built with React, Vite, and Tailwind CSS
 - **Targeted Messaging** - Send notices to specific user groups or all users
@@ -121,6 +123,8 @@ virtual-notice-board/
 ## 📱 Features Highlights
 
 - **Notice Management**: Create notices with rich text, attachments, categories, and priorities
+- **Password Recovery**: Secure forgot password flow with email verification
+- **Email Notifications**: Automated email system for user communications
 - **Targeted Distribution**: Send notices to specific roles or all users
 - **File Attachments**: Upload and share documents, images, and media
 - **Analytics Dashboard**: Track notice views, engagement, and user activity
