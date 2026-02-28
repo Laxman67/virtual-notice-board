@@ -254,6 +254,7 @@ const forgotPassword = async (req, res) => {
   try {
     const { email } = req.body;
 
+
     // Find user by email
     const user = await User.findOne({ email });
     if (!user) {

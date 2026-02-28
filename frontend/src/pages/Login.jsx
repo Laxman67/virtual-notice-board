@@ -61,69 +61,70 @@ const Login = () => {
   }
 
   return (
-    <div className="min-h-screen w-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-20">
-        <div className="absolute inset-0" style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%236366f1' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-        }}></div>
-      </div>
-      {/* Decorative Blurred Shapes */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-0 left-0 w-96 h-96 bg-blue-400 rounded-full filter blur-3xl"></div>
-        <div className="absolute top-1/2 right-0 w-96 h-96 bg-purple-400 rounded-full filter blur-3xl"></div>
-        <div className="absolute bottom-0 left-1/2 w-96 h-96 bg-indigo-400 rounded-full filter blur-3xl"></div>
-      </div>
+    <div className="min-h-screen w-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden" style={{
+      backgroundImage: `url("https://images.unsplash.com/photo-1563013544-824ae1b704d3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80")`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat'
+    }}>
+      {/* Professional Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-br from-slate-900/80 to-slate-800/60"></div>
       <div className="max-w-md w-full space-y-8 relative z-10">
-        <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-8 border border-white/20">
+        <div className="bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl p-8 border border-white/30">
           <div className="flex justify-center">
-            <div className="flex items-center space-x-2">
-              <User className="w-12 h-12 text-blue-600" />
-              <span className="text-3xl font-bold text-gray-900">Virtual Notice Board</span>
+            <div className="flex items-center space-x-3">
+              <div className="p-3 bg-blue-600 rounded-lg">
+                <User className="w-8 h-8 text-white" />
+              </div>
+              <span className="text-2xl font-bold text-gray-900">Virtual Notice Board</span>
             </div>
           </div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+          <h2 className="mt-6 text-center text-2xl font-semibold text-gray-800">
             Sign in to your account
           </h2>
-          <p className="mt-2 text-center text-sm text-gray-600">
+          {/* <p className="mt-2 text-center text-sm text-gray-600">
             Or{' '}
-            <Link to="/register" className="font-medium text-blue-600 hover:text-blue-500">
+            <Link to="/register" className="font-medium text-blue-600 hover:text-blue-500 transition-colors">
               create a new account
             </Link>
-          </p>
+          </p> */}
         </div>
 
-        {/* Role-Specific Links */}
-        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-4 mb-6 border border-blue-100">
-          <p className="text-center text-sm font-medium text-blue-800 mb-3">
-            Sign in as specific role:
+        {/* Professional Role Selection */}
+        <div className="bg-white/95 backdrop-blur-md rounded-xl p-6 border border-white/30 shadow-xl">
+          <p className="text-center text-sm font-medium text-gray-700 mb-6">
+            Select your role to continue
           </p>
-          <div className="flex justify-center space-x-3">
+          <div className="grid grid-cols-3 gap-3">
             <Link
               to="/login/student"
-              className="flex items-center px-3 py-2 bg-white text-blue-700 rounded-lg hover:bg-blue-50 transition-all text-sm shadow-sm border border-blue-200"
+              className="group flex flex-col items-center p-4 bg-gray-50 rounded-lg hover:bg-blue-50 hover:border-blue-200 border-2 border-transparent transition-all duration-200"
             >
-              <GraduationCap className="w-4 h-4 mr-1" />
-              Student
+              <div className="p-2 bg-blue-100 rounded-lg group-hover:bg-blue-200 transition-colors">
+                <GraduationCap className="w-6 h-6 text-blue-600" />
+              </div>
+              <span className="mt-2 text-sm font-medium text-gray-700 group-hover:text-blue-700">Student</span>
             </Link>
             <Link
               to="/login/faculty"
-              className="flex items-center px-3 py-2 bg-white text-emerald-700 rounded-lg hover:bg-emerald-50 transition-all text-sm shadow-sm border border-emerald-200"
+              className="group flex flex-col items-center p-4 bg-gray-50 rounded-lg hover:bg-emerald-50 hover:border-emerald-200 border-2 border-transparent transition-all duration-200"
             >
-              <Award className="w-4 h-4 mr-1" />
-              Faculty
+              <div className="p-2 bg-emerald-100 rounded-lg group-hover:bg-emerald-200 transition-colors">
+                <Award className="w-6 h-6 text-emerald-600" />
+              </div>
+              <span className="mt-2 text-sm font-medium text-gray-700 group-hover:text-emerald-700">Faculty</span>
             </Link>
             <Link
               to="/login/admin"
-              className="flex items-center px-3 py-2 bg-white text-purple-700 rounded-lg hover:bg-purple-50 transition-all text-sm shadow-sm border border-purple-200"
+              className="group flex flex-col items-center p-4 bg-gray-50 rounded-lg hover:bg-purple-50 hover:border-purple-200 border-2 border-transparent transition-all duration-200"
             >
-              <Shield className="w-4 h-4 mr-1" />
-              Admin
+              <div className="p-2 bg-purple-100 rounded-lg group-hover:bg-purple-200 transition-colors">
+                <Shield className="w-6 h-6 text-purple-600" />
+              </div>
+              <span className="mt-2 text-sm font-medium text-gray-700 group-hover:text-purple-700">Admin</span>
             </Link>
           </div>
         </div>
-
-
       </div>
     </div>
     // </div >

@@ -15,6 +15,9 @@ const createTransporter = () => {
   });
 };
 
+
+
+
 // Generate password reset token
 const generateResetToken = () => {
   return crypto.randomBytes(32).toString('hex');
