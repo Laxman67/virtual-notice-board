@@ -72,8 +72,6 @@ const register = async (req, res) => {
 // Login user
 const login = async (req, res) => {
   try {
-    // TODO
-    console.log(req.body)
     // Check for validation errors
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
