@@ -48,16 +48,6 @@ const AdminRegister = () => {
       newErrors.password = 'Password must be at least 8 characters'
     }
 
-    if (!formData.adminCode) {
-      newErrors.adminCode = 'Admin authorization code is required'
-    } else if (formData.adminCode !== 'ADMIN2024') {
-      newErrors.adminCode = 'Invalid admin authorization code'
-    }
-
-    if (!formData.accessLevel) {
-      newErrors.accessLevel = 'Access level is required'
-    }
-
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
   }

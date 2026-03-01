@@ -29,7 +29,8 @@ api.interceptors.response.use(
   (error) => {
     if (error.response?.status === 401) {
       localStorage.removeItem('token')
-      window.location.href = '/login'
+      // Don't redirect automatically - let the routing handle it
+      // This prevents overriding role-specific login pages
     }
     return Promise.reject(error)
   }

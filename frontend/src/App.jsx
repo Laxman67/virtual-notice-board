@@ -99,7 +99,6 @@ function App() {
 
       {/* Protected Routes */}
       <Route path="/" element={<Layout />}>
-        <Route index element={<Dashboard />} />
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="notices" element={<Notices />} />
         <Route path="notices/:id" element={<NoticeDetail />} />
@@ -149,6 +148,9 @@ function App() {
           }
         />
       </Route>
+
+      {/* Dashboard fallback */}
+      <Route path="/dashboard" element={<Dashboard />} />
 
       {/* Fallback Routes */}
       <Route path="" element={<Navigate to="/dashboard" replace />} />

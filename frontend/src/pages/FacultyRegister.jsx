@@ -48,14 +48,6 @@ const FacultyRegister = () => {
       newErrors.password = 'Password must be at least 6 characters'
     }
 
-    if (!formData.employeeId) {
-      newErrors.employeeId = 'Employee ID is required'
-    }
-
-    if (!formData.designation) {
-      newErrors.designation = 'Designation is required'
-    }
-
     if (!formData.department) {
       newErrors.department = 'Department is required'
     }

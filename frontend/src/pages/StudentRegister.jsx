@@ -48,14 +48,6 @@ const StudentRegister = () => {
       newErrors.password = 'Password must be at least 6 characters'
     }
 
-    if (!formData.studentId) {
-      newErrors.studentId = 'Student ID is required'
-    }
-
-    if (!formData.year) {
-      newErrors.year = 'Academic year is required'
-    }
-
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
   }
