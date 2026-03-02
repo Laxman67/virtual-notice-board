@@ -36,12 +36,6 @@ const AdminSidebar = ({ isCollapsed, setIsCollapsed, isMobileOpen, setIsMobileOp
   ]
 
   const adminMenuItems = [
-    // {
-    //   title: 'Admin Dashboard',
-    //   path: '/dashboard',
-    //   icon: LayoutDashboard,
-    //   badge: 'Admin'
-    // },
     {
       title: 'Manage Users',
       path: '/dashboard/users',
@@ -65,7 +59,22 @@ const AdminSidebar = ({ isCollapsed, setIsCollapsed, isMobileOpen, setIsMobileOp
     }
   ]
 
-  const allMenuItems = user?.role === 'ADMIN' ? [...menuItems, ...adminMenuItems] : menuItems
+  const facultyMenuItems = [
+    {
+      title: 'Manage Notices',
+      path: '/dashboard/notices',
+      icon: FileText
+    },
+    {
+      title: 'Analytics',
+      path: '/dashboard/analytics',
+      icon: BarChart3
+    }
+  ]
+
+  const allMenuItems = user?.role === 'ADMIN' ? [...menuItems, ...adminMenuItems] :
+    user?.role === 'FACULTY' ? [...menuItems, ...facultyMenuItems] :
+      menuItems
 
   const isActive = (path) => {
     return location.pathname === path || location.pathname.startsWith(path + '/')

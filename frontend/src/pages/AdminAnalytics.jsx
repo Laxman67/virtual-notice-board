@@ -144,9 +144,9 @@ const AdminAnalytics = () => {
     )
   }
 
-  if (user?.role !== 'ADMIN') {
+  if (user?.role !== 'ADMIN' && user?.role !== 'FACULTY') {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-rose-50 flex items-center justify-center">
+      <div className="min-h-screen bg-linear-to-br from-purple-50 via-pink-50 to-rose-50 flex items-center justify-center">
         <div className="text-center">
           <AlertTriangle className="w-16 h-16 text-red-500 mx-auto mb-4" />
           <h2 className="text-2xl font-bold text-gray-900 mb-2">Access Denied</h2>
