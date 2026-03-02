@@ -7,13 +7,13 @@ import {
   getNoticeAnalytics
 } from '../controller/analytics.controller.js';
 import authenticateToken from '../middleware/authenticateToken.js';
-import { isAdmin } from '../middleware/role.middleware.js';
+import { isAdmin, isFaculty } from '../middleware/role.middleware.js';
 
 const router = express.Router();
 
-// All routes are admin-only
+// All routes are admin and faculty access
 router.use(authenticateToken);
-router.use(isAdmin);
+router.use(isFaculty);
 
 // Validation rules
 const dateRangeValidation = [
