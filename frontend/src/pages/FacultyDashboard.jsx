@@ -42,8 +42,23 @@ const FacultyDashboard = () => {
         const facultyNotices = noticesResponse.data.data.notices || []
         const myNotices = facultyNotices.filter(n => n.postedBy?._id === user?._id)
 
+        // Try to get total notices count (fallback if API fails)
+        let totalNotices = 0
+        try {
+          const allNoticesResponse = await noticeAPI.getNotices({
+            limit: 1, // Just get count
+            sortBy: 'createdAt',
+            sortOrder: 'desc'
+          })
+          totalNotices = allNoticesResponse.data.data?.notices?.length || 0
+        } catch (error) {
+          console.log('Failed to fetch total notices count:', error)
+          // Use the notices we already fetched as fallback
+          totalNotices = facultyNotices.length
+        }
+
         setStats({
-          totalNotices: facultyNotices.length,
+          totalNotices: totalNotices, // Use total count instead of just faculty notices
           myNotices: myNotices.length,
           recentNotices: facultyNotices.filter(n => new Date(n.createdAt) > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)).length,
           totalViews: facultyNotices.reduce((sum, n) => sum + (n.viewCount || 0), 0),
@@ -52,6 +67,7 @@ const FacultyDashboard = () => {
         })
       } catch (error) {
         console.error('Failed to fetch dashboard data:', error)
+        toast.error('Failed to load dashboard data')
       } finally {
         setLoading(false)
       }

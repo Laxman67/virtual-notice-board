@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from 'react-router-dom'
+import { Routes, Route, Navigate, useParams } from 'react-router-dom'
 import { useAuth } from './context/AuthContext'
 import './App.css'
 import Layout from './components/Layout'
@@ -23,6 +23,23 @@ import CreateNotice from './pages/CreateNotice'
 import EditNotice from './pages/EditNotice'
 import Profile from './pages/Profile'
 import LoadingSpinner from './components/LoadingSpinner'
+import ManageUsers from './pages/ManageUsers'
+import ManageNotices from './pages/ManageNotices'
+import AdminSettings from './pages/AdminSettings'
+import AdminAnalytics from './pages/AdminAnalytics'
+import AdminLayout from './components/AdminLayout'
+
+// Wrapper component to handle notice redirect
+const NoticeRedirect = () => {
+  const { user } = useAuth()
+  const { id } = useParams()
+
+  if (user?.role === 'ADMIN' || user?.role === 'FACULTY') {
+    return <Navigate to={`/dashboard/notices/${id}`} replace />
+  }
+
+  return <NoticeDetail />
+}
 
 function App() {
   const { user, loading } = useAuth()
@@ -40,7 +57,13 @@ function App() {
       {/* Root Route - Master Login */}
       <Route
         path="/"
-        element={!user ? <Login /> : <Navigate to="/dashboard" replace />}
+        element={
+          !user ?
+            <Login /> :
+            user?.role === 'ADMIN' ?
+              <Navigate to="/dashboard" replace /> :
+              <Navigate to="/dashboard" replace />
+        }
       />
 
       {/* Role Selection */}
@@ -99,10 +122,26 @@ function App() {
 
       {/* Protected Routes */}
       <Route path="/" element={<Layout />}>
-        <Route path="dashboard" element={<Dashboard />} />
-        <Route path="notices" element={<Notices />} />
-        <Route path="notices/:id" element={<NoticeDetail />} />
-        <Route path="profile" element={<Profile />} />
+        <Route
+          path="notices"
+          element={
+            user?.role === 'ADMIN' || user?.role === 'FACULTY' ?
+              <Navigate to="/dashboard/notices" replace /> :
+              <Notices />
+          }
+        />
+        <Route
+          path="notices/:id"
+          element={<NoticeRedirect />}
+        />
+        <Route
+          path="profile"
+          element={
+            user?.role === 'ADMIN' ?
+              <Navigate to="/dashboard/profile" replace /> :
+              <Profile />
+          }
+        />
 
         {/* Role-Specific Dashboard Routes */}
         <Route
@@ -121,16 +160,36 @@ function App() {
               <Navigate to="/dashboard" replace />
           }
         />
+
+        {/* Faculty/Admin Routes */}
         <Route
-          path="admin-dashboard"
+          path="notices/:id"
+          element={<NoticeDetail />}
+        />
+      </Route>
+
+      {/* Admin Management Routes - Under Dashboard */}
+      <Route path="/dashboard" element={<AdminLayout />}>
+        <Route
+          path=""
           element={
             user?.role === 'ADMIN' ?
               <AdminDashboard /> :
+              user?.role === 'FACULTY' ?
+                <FacultyDashboard /> :
+                user?.role === 'STUDENT' ?
+                  <StudentDashboard /> :
+                  <Navigate to="/dashboard" replace />
+          }
+        />
+        <Route
+          path="users"
+          element={
+            user?.role === 'ADMIN' ?
+              <ManageUsers /> :
               <Navigate to="/dashboard" replace />
           }
         />
-
-        {/* Faculty/Admin Routes */}
         <Route
           path="notices/create"
           element={
@@ -147,14 +206,71 @@ function App() {
               <Navigate to="/dashboard" replace />
           }
         />
+        <Route
+          path="notices/:id"
+          element={
+            user?.role === 'ADMIN' || user?.role === 'FACULTY' ?
+              <NoticeDetail /> :
+              <Navigate to="/dashboard" replace />
+          }
+        />
+        <Route
+          path="notices"
+          element={
+            (user?.role === 'ADMIN' || user?.role === 'FACULTY') ?
+              <ManageNotices /> :
+              <Navigate to="/dashboard" replace />
+          }
+        />
+        <Route
+          path="profile"
+          element={
+            user?.role === 'ADMIN' || user?.role === 'FACULTY' ?
+              <Profile /> :
+              <Navigate to="/dashboard" replace />
+          }
+        />
+        <Route
+          path="settings"
+          element={
+            user?.role === 'ADMIN' ?
+              <AdminSettings /> :
+              <Navigate to="/dashboard" replace />
+          }
+        />
+        <Route
+          path="analytics"
+          element={
+            (() => {
+              console.log('Analytics route accessed - user role:', user?.role);
+              if (user?.role === 'ADMIN') {
+                console.log('Rendering AdminAnalytics component');
+                return <AdminAnalytics />;
+              } else if (user?.role === 'FACULTY') {
+                console.log('Rendering AdminAnalytics component for faculty');
+                return <AdminAnalytics />;
+              } else {
+                console.log('Redirecting to dashboard - not admin/faculty');
+                return <Navigate to="/dashboard" replace />;
+              }
+            })()
+          }
+        />
+        <Route
+          path="faculty-dashboard"
+          element={
+            (user?.role === 'FACULTY') ?
+              <FacultyDashboard /> :
+              <Navigate to="/dashboard" replace />
+          }
+        />
+
+        {/* Faculty/Admin Routes */}
+        <Route
+          path="notices/:id"
+          element={<NoticeDetail />}
+        />
       </Route>
-
-      {/* Dashboard fallback */}
-      <Route path="/dashboard" element={<Dashboard />} />
-
-      {/* Fallback Routes */}
-      <Route path="" element={<Navigate to="/dashboard" replace />} />
-      <Route path="*" element={<Navigate to="/dashboard" replace />} />
     </Routes>
   )
 }
