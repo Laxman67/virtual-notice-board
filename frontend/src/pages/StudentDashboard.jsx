@@ -54,7 +54,7 @@ const StudentDashboard = () => {
     fetchData()
   }, [])
 
-  const StatCard = ({ title, value, icon: Icon, color = 'blue', trend = null }) => {
+  const StatCard = ({ title, value, color = 'blue', trend = null }) => {
     const colorClasses = {
       blue: 'bg-blue-500',
       indigo: 'bg-indigo-500',
@@ -74,7 +74,7 @@ const StudentDashboard = () => {
         <div className="flex items-center justify-between">
           <div className="flex items-center">
             <div className={`p-3 rounded-xl ${colorClasses[color]} bg-opacity-10`}>
-              <Icon className={`w-6 h-6 ${iconColorClasses[color]}`} />
+              <div className={`w-6 h-6 ${iconColorClasses[color]} rounded`} />
             </div>
             <div className="ml-4">
               <p className="text-sm font-medium text-gray-600">{title}</p>
@@ -91,7 +91,7 @@ const StudentDashboard = () => {
     )
   }
 
-  const QuickActionCard = ({ title, description, icon: Icon, to, color = 'blue' }) => {
+  const QuickActionCard = ({ title, description, to, color = 'blue' }) => {
     const colorClasses = {
       blue: 'bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700',
       indigo: 'bg-gradient-to-r from-indigo-500 to-blue-600 hover:from-indigo-600 hover:to-blue-700',
@@ -105,7 +105,7 @@ const StudentDashboard = () => {
       >
         <div className="flex items-center space-x-4">
           <div className={`p-3 rounded-xl ${colorClasses[color]} text-white group-hover:scale-110 transition-transform`}>
-            <Icon className="w-6 h-6" />
+            <div className="w-6 h-6 rounded" />
           </div>
           <div>
             <h3 className="text-lg font-semibold text-gray-900">{title}</h3>
@@ -165,28 +165,24 @@ const StudentDashboard = () => {
           <StatCard
             title="Total Notices"
             value={stats.totalNotices || 0}
-            icon={BookOpen}
             color="blue"
             trend={12}
           />
           <StatCard
             title="Recent Updates"
             value={stats.recentNotices || 0}
-            icon={TrendingUp}
             color="indigo"
             trend={8}
           />
           <StatCard
             title="High Priority"
             value={stats.highPriorityNotices || 0}
-            icon={AlertCircle}
             color="sky"
             trend={-5}
           />
           <StatCard
             title="Academic Notices"
             value={stats.academicNotices || 0}
-            icon={Target}
             color="cyan"
             trend={15}
           />
@@ -197,15 +193,13 @@ const StudentDashboard = () => {
           <QuickActionCard
             title="All Notices"
             description="Browse all available notices"
-            icon={BookOpen}
-            to="/notices"
+            to="/dashboard/notices"
             color="blue"
           />
           <QuickActionCard
             title="Academic"
             description="Academic related notices"
-            icon={GraduationCap}
-            to="/notices?category=Academic"
+            to="/dashboard/notices?category=Academic"
             color="indigo"
           />
           {/* <QuickActionCard
@@ -213,15 +207,9 @@ const StudentDashboard = () => {
             description="Update your profile information"
             icon={Users}
             to="/profile"
-            color="sky"
+          color="sky"
           /> */}
-          <QuickActionCard
-            title="Calendar"
-            description="View academic calendar"
-            icon={Calendar}
-            to="/calendar"
-            color="cyan"
-          />
+
         </div>
 
         {/* Recent Notices */}

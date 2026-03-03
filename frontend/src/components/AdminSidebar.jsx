@@ -9,9 +9,9 @@ import {
   LogOut,
   Menu,
   X,
-  Shield
+  Shield,
+  Lock
 } from 'lucide-react'
-import { useState } from 'react'
 
 const AdminSidebar = ({ isCollapsed, setIsCollapsed, isMobileOpen, setIsMobileOpen }) => {
   const { user, logout } = useAuth()
@@ -24,14 +24,14 @@ const AdminSidebar = ({ isCollapsed, setIsCollapsed, isMobileOpen, setIsMobileOp
       icon: LayoutDashboard
     },
     {
-      title: 'Notices',
-      path: '/dashboard/notices',
-      icon: FileText
-    },
-    {
       title: 'Profile',
       path: '/dashboard/profile',
       icon: Users
+    },
+    {
+      title: 'Manage Password',
+      path: '/dashboard/reset-password',
+      icon: Lock
     }
   ]
 
@@ -72,9 +72,18 @@ const AdminSidebar = ({ isCollapsed, setIsCollapsed, isMobileOpen, setIsMobileOp
     }
   ]
 
+  const studentMenuItems = [
+    {
+      title: 'Notices',
+      path: '/dashboard/notices',
+      icon: FileText
+    }
+  ]
+
   const allMenuItems = user?.role === 'ADMIN' ? [...menuItems, ...adminMenuItems] :
     user?.role === 'FACULTY' ? [...menuItems, ...facultyMenuItems] :
-      menuItems
+      user?.role === 'STUDENT' ? [...menuItems, ...studentMenuItems] :
+        menuItems
 
   const isActive = (path) => {
     return location.pathname === path || location.pathname.startsWith(path + '/')

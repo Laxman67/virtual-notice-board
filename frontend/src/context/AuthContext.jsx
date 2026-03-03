@@ -19,8 +19,7 @@ export const AuthProvider = ({ children }) => {
           return
         }
 
-        const response = await authAPI.getProfile()
-        const userData = response.data.data.user
+        const userData = (await authAPI.getProfile()).data.data.user
 
         setUser(userData)
         setIsAuthenticated(true)
@@ -40,8 +39,7 @@ export const AuthProvider = ({ children }) => {
   const login = async (credentials) => {
     try {
       setLoading(true)
-      const response = await authAPI.login(credentials)
-      const { user: userData, token } = response.data.data
+      const { user: userData, token } = (await authAPI.login(credentials)).data.data
 
       localStorage.setItem('token', token)
       setUser(userData)
@@ -61,8 +59,7 @@ export const AuthProvider = ({ children }) => {
   const register = async (userData) => {
     try {
       setLoading(true)
-      const response = await authAPI.register(userData)
-      const { user: newUser, token } = response.data.data
+      const { user: newUser, token } = (await authAPI.register(userData)).data.data
 
       localStorage.setItem('token', token)
       setUser(newUser)
@@ -96,8 +93,7 @@ export const AuthProvider = ({ children }) => {
 
   const updateProfile = async (userData) => {
     try {
-      const response = await authAPI.updateProfile(userData)
-      setUser(response.data.data.user)
+      setUser((await authAPI.updateProfile(userData)).data.data.user)
       toast.success('Profile updated successfully!')
       return { success: true }
     } catch (error) {
@@ -110,7 +106,7 @@ export const AuthProvider = ({ children }) => {
   const forgotPassword = async (email) => {
     try {
       setLoading(true)
-      const response = await authAPI.forgotPassword(email)
+      await authAPI.forgotPassword(email)
       toast.success('Password reset link has been sent to your email!')
       return { success: true }
     } catch (error) {
@@ -125,7 +121,7 @@ export const AuthProvider = ({ children }) => {
   const resetPassword = async (token, newPassword) => {
     try {
       setLoading(true)
-      const response = await authAPI.resetPassword(token, newPassword)
+      await authAPI.resetPassword(token, newPassword)
       toast.success('Password has been reset successfully!')
       return { success: true }
     } catch (error) {

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { toast } from 'react-toastify'
 import { analyticsAPI } from '../api/admin'
@@ -52,12 +52,7 @@ const AdminAnalytics = () => {
 
   console.log('AdminAnalytics component mounted - user:', user?.role)
 
-  useEffect(() => {
-    console.log('AdminAnalytics useEffect called')
-    fetchAnalytics()
-  }, [dateRange])
-
-  const fetchAnalytics = async () => {
+  const fetchAnalytics = useCallback(async () => {
     try {
       console.log('Fetching analytics data...')
       setLoading(true)
@@ -85,7 +80,12 @@ const AdminAnalytics = () => {
     } finally {
       setLoading(false)
     }
-  }
+  }, [dateRange])
+
+  useEffect(() => {
+    console.log('AdminAnalytics useEffect called')
+    fetchAnalytics()
+  }, [fetchAnalytics])
 
   const exportAnalytics = () => {
     const dataStr = JSON.stringify(analytics, null, 2)
@@ -98,7 +98,7 @@ const AdminAnalytics = () => {
     toast.success('Analytics exported successfully')
   }
 
-  const StatCard = ({ title, value, icon: Icon, color = 'purple', trend = null, subtitle = null }) => {
+  const StatCard = ({ title, value, color = 'purple', trend = null, subtitle = null }) => {
     const colorClasses = {
       purple: 'bg-purple-500',
       pink: 'bg-pink-500',
@@ -124,7 +124,7 @@ const AdminAnalytics = () => {
         <div className="flex items-center justify-between">
           <div className="flex items-center">
             <div className={`p-3 rounded-xl ${colorClasses[color]} bg-opacity-10`}>
-              <Icon className={`w-6 h-6 ${iconColorClasses[color]}`} />
+              <div className={`w-6 h-6 ${iconColorClasses[color]} rounded`} />
             </div>
             <div className="ml-4">
               <p className="text-sm font-medium text-gray-600">{title}</p>
@@ -209,42 +209,36 @@ const AdminAnalytics = () => {
           <StatCard
             title="Total Users"
             value={analytics.overview.totalUsers}
-            icon={Users}
             color="purple"
             trend={12}
           />
           <StatCard
             title="Active Users"
             value={analytics.overview.activeUsers}
-            icon={Activity}
             color="green"
             trend={8}
           />
           <StatCard
             title="New Users"
             value={analytics.overview.newUsers}
-            icon={TrendingUp}
             color="blue"
             trend={25}
           />
           <StatCard
             title="Total Notices"
             value={analytics.overview.totalNotices}
-            icon={FileText}
             color="pink"
             trend={15}
           />
           <StatCard
             title="Total Views"
             value={analytics.overview.totalViews}
-            icon={Eye}
             color="violet"
             trend={32}
           />
           <StatCard
             title="New Notices"
             value={analytics.overview.newNotices}
-            icon={Calendar}
             color="orange"
             trend={18}
           />

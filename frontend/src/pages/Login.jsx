@@ -11,7 +11,6 @@ const Login = () => {
     email: '',
     password: ''
   })
-  const [showPassword, setShowPassword] = useState(false)
   const [errors, setErrors] = useState({})
 
   const handleChange = (e) => {

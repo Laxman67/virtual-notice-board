@@ -70,7 +70,7 @@ const AdminDashboard = () => {
     fetchData()
   }, [])
 
-  const StatCard = ({ title, value, icon: Icon, color = 'purple', trend = null, subtitle = null }) => {
+  const StatCard = ({ title, value, color = 'purple', trend = null, subtitle = null }) => {
     const colorClasses = {
       purple: 'bg-purple-500',
       pink: 'bg-pink-500',
@@ -90,7 +90,7 @@ const AdminDashboard = () => {
         <div className="flex items-center justify-between">
           <div className="flex items-center">
             <div className={`p-3 rounded-xl ${colorClasses[color]} bg-opacity-10`}>
-              <Icon className={`w-6 h-6 ${iconColorClasses[color]}`} />
+              <div className={`w-6 h-6 ${iconColorClasses[color]} rounded`} />
             </div>
             <div className="ml-4">
               <p className="text-sm font-medium text-gray-600">{title}</p>
@@ -110,7 +110,7 @@ const AdminDashboard = () => {
     )
   }
 
-  const QuickActionCard = ({ title, description, icon: Icon, to, color = 'purple', badge = null }) => {
+  const QuickActionCard = ({ title, description, to, color = 'purple', badge = null }) => {
     const colorClasses = {
       purple: 'bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700',
       pink: 'bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700',
@@ -129,7 +129,7 @@ const AdminDashboard = () => {
         )}
         <div className="flex items-center space-x-4">
           <div className={`p-3 rounded-xl ${colorClasses[color]} text-white group-hover:scale-110 transition-transform`}>
-            <Icon className="w-6 h-6" />
+            <div className="w-6 h-6 rounded" />
           </div>
           <div>
             <h3 className="text-lg font-semibold text-gray-900">{title}</h3>
@@ -177,28 +177,24 @@ const AdminDashboard = () => {
         <StatCard
           title="Total Notices"
           value={stats.totalNotices || 0}
-          icon={FileText}
           color="purple"
           trend={12}
         />
         <StatCard
           title="Active Notices"
           value={stats.activeNotices || 0}
-          icon={MonitorStop}
           color="pink"
           trend={8}
         />
         <StatCard
           title="Total Views"
           value={stats.totalViews || 0}
-          icon={Eye}
           color="violet"
           trend={25}
         />
         <StatCard
           title="Recent Updates"
           value={stats.recentNotices || 0}
-          icon={Activity}
           color="fuchsia"
           trend={15}
         />
@@ -209,14 +205,12 @@ const AdminDashboard = () => {
         <QuickActionCard
           title="Manage Notices"
           description="View and manage all notices"
-          icon={FileText}
           to="/notices"
           color="purple"
         />
         <QuickActionCard
           title="User Management"
           description="Manage system users"
-          icon={Users}
           to="/admin/users"
           color="pink"
           badge="New"
@@ -224,14 +218,12 @@ const AdminDashboard = () => {
         <QuickActionCard
           title="System Settings"
           description="Configure system settings"
-          icon={Settings}
           to="/admin/settings"
           color="violet"
         />
         <QuickActionCard
           title="Analytics"
           description="View system analytics"
-          icon={BarChart3}
           to="/admin/analytics"
           color="fuchsia"
         />
@@ -388,21 +380,18 @@ const AdminDashboard = () => {
         <QuickActionCard
           title="Create Notice"
           description="Create a new system notice"
-          icon={Plus}
           to="/dashboard/notices/create"
           color="purple"
         />
         <QuickActionCard
           title="User Management"
           description="Manage users and permissions"
-          icon={Users}
           to="/dashboard/users"
           color="pink"
         />
         <QuickActionCard
           title="System Settings"
           description="Configure system parameters"
-          icon={Settings}
           to="/dashboard/settings"
           color="violet"
         />

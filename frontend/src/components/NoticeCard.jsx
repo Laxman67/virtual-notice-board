@@ -17,6 +17,54 @@ import {
 } from 'lucide-react'
 import { formatDate, getPriorityColor, canEditNotice, canDeleteNotice } from '../utils/helpers'
 
+// Get role-based styling for the notice card
+const getRoleBasedStyling = (postedBy) => {
+  if (!postedBy?.role) return 'border-gray-200 bg-white'
+
+  switch (postedBy.role) {
+    case 'ADMIN':
+      return 'border-purple-200 bg-gradient-to-r from-purple-50 to-pink-50'
+    case 'FACULTY':
+      return 'border-emerald-200 bg-gradient-to-r from-emerald-50 to-teal-50'
+    case 'STUDENT':
+      return 'border-blue-200 bg-gradient-to-r from-blue-50 to-indigo-50'
+    default:
+      return 'border-gray-200 bg-white'
+  }
+}
+
+// Get role-based badge styling
+const getRoleBadgeStyling = (postedBy) => {
+  if (!postedBy?.role) return 'bg-gray-100 text-gray-800'
+
+  switch (postedBy.role) {
+    case 'ADMIN':
+      return 'bg-purple-100 text-purple-800 border-purple-200'
+    case 'FACULTY':
+      return 'bg-emerald-100 text-emerald-800 border-emerald-200'
+    case 'STUDENT':
+      return 'bg-blue-100 text-blue-800 border-blue-200'
+    default:
+      return 'bg-gray-100 text-gray-800'
+  }
+}
+
+// Role icon component
+const RoleIcon = ({ postedBy }) => {
+  if (!postedBy?.role) return <User className="w-3 h-3" />
+
+  switch (postedBy.role) {
+    case 'ADMIN':
+      return <Shield className="w-3 h-3" />
+    case 'FACULTY':
+      return <Award className="w-3 h-3" />
+    case 'STUDENT':
+      return <GraduationCap className="w-3 h-3" />
+    default:
+      return <User className="w-3 h-3" />
+  }
+}
+
 const NoticeCard = ({ notice, onDelete, onEdit }) => {
   const { user } = useAuth()
 
@@ -29,57 +77,8 @@ const NoticeCard = ({ notice, onDelete, onEdit }) => {
   const canEdit = canEditNotice(user, notice)
   const canDelete = canDeleteNotice(user, notice)
 
-  // Get role-based styling for the notice card
-  const getRoleBasedStyling = (postedBy) => {
-    if (!postedBy?.role) return 'border-gray-200 bg-white'
-
-    switch (postedBy.role) {
-      case 'ADMIN':
-        return 'border-purple-200 bg-gradient-to-r from-purple-50 to-pink-50'
-      case 'FACULTY':
-        return 'border-emerald-200 bg-gradient-to-r from-emerald-50 to-teal-50'
-      case 'STUDENT':
-        return 'border-blue-200 bg-gradient-to-r from-blue-50 to-indigo-50'
-      default:
-        return 'border-gray-200 bg-white'
-    }
-  }
-
-  // Get role-based badge styling
-  const getRoleBadgeStyling = (postedBy) => {
-    if (!postedBy?.role) return 'bg-gray-100 text-gray-800'
-
-    switch (postedBy.role) {
-      case 'ADMIN':
-        return 'bg-purple-100 text-purple-800 border-purple-200'
-      case 'FACULTY':
-        return 'bg-emerald-100 text-emerald-800 border-emerald-200'
-      case 'STUDENT':
-        return 'bg-blue-100 text-blue-800 border-blue-200'
-      default:
-        return 'bg-gray-100 text-gray-800'
-    }
-  }
-
-  // Get role icon
-  const getRoleIcon = (postedBy) => {
-    if (!postedBy?.role) return User
-
-    switch (postedBy.role) {
-      case 'ADMIN':
-        return Shield
-      case 'FACULTY':
-        return Award
-      case 'STUDENT':
-        return GraduationCap
-      default:
-        return User
-    }
-  }
-
   const roleStyling = getRoleBasedStyling(notice.postedBy)
   const roleBadgeStyling = getRoleBadgeStyling(notice.postedBy)
-  const RoleIcon = getRoleIcon(notice.postedBy)
 
   return (
     <div className={`rounded-lg shadow-sm border p-6 hover:shadow-md transition-shadow ${roleStyling}`}>
@@ -94,8 +93,8 @@ const NoticeCard = ({ notice, onDelete, onEdit }) => {
           </span>
           {/* Role Badge */}
           <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${roleBadgeStyling}`}>
-            <RoleIcon className="w-3 h-3 mr-1" />
-            {notice.postedBy?.role || 'User'}
+            <RoleIcon postedBy={notice.postedBy} />
+            <span className="ml-1">{notice.postedBy?.role || 'User'}</span>
           </span>
           {notice.isPinned && (
             <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
@@ -184,7 +183,7 @@ const NoticeCard = ({ notice, onDelete, onEdit }) => {
             </div>
           )}
           <div className="flex items-center space-x-1">
-            <RoleIcon className="w-3 h-3" />
+            <RoleIcon postedBy={notice.postedBy} />
             <span>{notice.postedBy?.name}</span>
           </div>
           <div className="flex items-center space-x-1">

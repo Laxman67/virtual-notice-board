@@ -28,6 +28,7 @@ import ManageNotices from './pages/ManageNotices'
 import AdminSettings from './pages/AdminSettings'
 import AdminAnalytics from './pages/AdminAnalytics'
 import AdminLayout from './components/AdminLayout'
+import DashboardResetPassword from './pages/DashboardResetPassword'
 
 // Wrapper component to handle notice redirect
 const NoticeRedirect = () => {
@@ -219,15 +220,19 @@ function App() {
           element={
             (user?.role === 'ADMIN' || user?.role === 'FACULTY') ?
               <ManageNotices /> :
-              <Navigate to="/dashboard" replace />
+              user?.role === 'STUDENT' ?
+                <Notices /> :
+                <Navigate to="/dashboard" replace />
           }
         />
         <Route
           path="profile"
           element={
-            user?.role === 'ADMIN' || user?.role === 'FACULTY' ?
+            (user?.role === 'ADMIN' || user?.role === 'FACULTY') ?
               <Profile /> :
-              <Navigate to="/dashboard" replace />
+              user?.role === 'STUDENT' ?
+                <Profile /> :
+                <Navigate to="/dashboard" replace />
           }
         />
         <Route
@@ -254,6 +259,12 @@ function App() {
                 return <Navigate to="/dashboard" replace />;
               }
             })()
+          }
+        />
+        <Route
+          path="reset-password"
+          element={
+            user ? <DashboardResetPassword /> : <Navigate to="/login" replace />
           }
         />
         <Route

@@ -50,7 +50,7 @@ const Dashboard = () => {
     fetchData()
   }, [user])
 
-  const StatCard = ({ title, value, icon: Icon, color = 'blue', trend = null }) => {
+  const StatCard = ({ title, value, color = 'blue', trend = null }) => {
     const colorClasses = {
       blue: 'bg-blue-500',
       green: 'bg-green-500',
@@ -74,7 +74,7 @@ const Dashboard = () => {
         <div className="flex items-center justify-between">
           <div className="flex items-center">
             <div className={`p-3 rounded-lg ${colorClasses[color]} bg-opacity-10`}>
-              <Icon className={`w-6 h-6 ${iconColorClasses[color]}`} />
+              <div className={`w-6 h-6 ${iconColorClasses[color]} rounded`} />
             </div>
             <div className="ml-4">
               <p className="text-sm font-medium text-gray-600">{title}</p>
@@ -91,7 +91,7 @@ const Dashboard = () => {
     )
   }
 
-  const QuickActionCard = ({ title, description, icon: Icon, to, color = 'blue' }) => {
+  const QuickActionCard = ({ title, description, to, color = 'blue' }) => {
     const colorClasses = {
       blue: 'bg-blue-500 hover:bg-blue-600',
       green: 'bg-green-500 hover:bg-green-600',
@@ -106,7 +106,7 @@ const Dashboard = () => {
       >
         <div className="flex items-center space-x-4">
           <div className={`p-3 rounded-lg ${colorClasses[color]} text-white`}>
-            <Icon className="w-6 h-6" />
+            <div className="w-6 h-6 rounded" />
           </div>
           <div>
             <h3 className="text-lg font-semibold text-gray-900">{title}</h3>
@@ -165,14 +165,12 @@ const Dashboard = () => {
           <StatCard
             title="Total Notices"
             value={stats.totalNotices || 0}
-            icon={MonitorStop}
             color="blue"
             trend={12}
           />
           <StatCard
             title="Active Notices"
             value={stats.activeNotices || 0}
-            icon={TrendingUp}
             color="green"
             trend={8}
           />
@@ -186,7 +184,6 @@ const Dashboard = () => {
           <StatCard
             title="Recent Views"
             value={stats.recentViews || 0}
-            icon={Eye}
             color="purple"
             trend={25}
           />
@@ -199,13 +196,11 @@ const Dashboard = () => {
           <StatCard
             title="Total Notices"
             value={notices.length}
-            icon={MonitorStop}
             color="blue"
           />
           <StatCard
             title="Recent Updates"
             value={notices.filter(n => new Date(n.createdAt) > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)).length}
-            icon={Activity}
             color="green"
           />
           {/* <StatCard
@@ -222,7 +217,6 @@ const Dashboard = () => {
         <QuickActionCard
           title="View All Notices"
           description="Browse all available notices"
-          icon={MonitorStop}
           to="/notices"
           color="blue"
         />
@@ -232,14 +226,12 @@ const Dashboard = () => {
             <QuickActionCard
               title="Create Notice"
               description="Create a new notice"
-              icon={Plus}
               to="/notices/create"
               color="green"
             />
             <QuickActionCard
               title="Manage Notices"
               description="Edit or delete notices"
-              icon={BarChart3}
               to="/notices"
               color="purple"
             />

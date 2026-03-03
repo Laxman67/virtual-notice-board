@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { noticeAPI } from '../api'
+import { toast } from 'react-toastify'
 import {
   Award,
   Calendar,
@@ -76,7 +77,7 @@ const FacultyDashboard = () => {
     fetchData()
   }, [user])
 
-  const StatCard = ({ title, value, icon: Icon, color = 'emerald', trend = null }) => {
+  const StatCard = ({ title, value, color = 'emerald', trend = null }) => {
     const colorClasses = {
       emerald: 'bg-emerald-500',
       teal: 'bg-teal-500',
@@ -96,7 +97,7 @@ const FacultyDashboard = () => {
         <div className="flex items-center justify-between">
           <div className="flex items-center">
             <div className={`p-3 rounded-xl ${colorClasses[color]} bg-opacity-10`}>
-              <Icon className={`w-6 h-6 ${iconColorClasses[color]}`} />
+              <div className={`w-6 h-6 ${iconColorClasses[color]} rounded`} />
             </div>
             <div className="ml-4">
               <p className="text-sm font-medium text-gray-600">{title}</p>
@@ -113,7 +114,7 @@ const FacultyDashboard = () => {
     )
   }
 
-  const QuickActionCard = ({ title, description, icon: Icon, to, color = 'emerald' }) => {
+  const QuickActionCard = ({ title, description, to, color = 'emerald' }) => {
     const colorClasses = {
       emerald: 'bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700',
       teal: 'bg-gradient-to-r from-teal-500 to-emerald-600 hover:from-teal-600 hover:to-emerald-700',
@@ -127,7 +128,7 @@ const FacultyDashboard = () => {
       >
         <div className="flex items-center space-x-4">
           <div className={`p-3 rounded-xl ${colorClasses[color]} text-white group-hover:scale-110 transition-transform`}>
-            <Icon className="w-6 h-6" />
+            <div className="w-6 h-6 rounded" />
           </div>
           <div>
             <h3 className="text-lg font-semibold text-gray-900">{title}</h3>
@@ -187,28 +188,24 @@ const FacultyDashboard = () => {
           <StatCard
             title="My Notices"
             value={stats.myNotices || 0}
-            icon={BookOpen}
             color="emerald"
             trend={12}
           />
           <StatCard
             title="Total Views"
             value={stats.totalViews || 0}
-            icon={Eye}
             color="teal"
             trend={25}
           />
           <StatCard
             title="Recent Updates"
             value={stats.recentNotices || 0}
-            icon={TrendingUp}
             color="green"
             trend={8}
           />
           <StatCard
             title="High Priority"
             value={stats.highPriorityNotices || 0}
-            icon={AlertCircle}
             color="lime"
             trend={-5}
           />
@@ -219,21 +216,18 @@ const FacultyDashboard = () => {
           <QuickActionCard
             title="Create Notice"
             description="Create a new notice"
-            icon={Plus}
             to="/notices/create"
             color="emerald"
           />
           <QuickActionCard
             title="Manage Notices"
             description="Edit or delete notices"
-            icon={Edit}
             to="/notices"
             color="teal"
           />
           <QuickActionCard
             title="Analytics"
             description="View notice statistics"
-            icon={BarChart3}
             to="/analytics"
             color="green"
           />
